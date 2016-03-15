@@ -1,12 +1,13 @@
 class WikisController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  
+
   def new
     @wiki = Wiki.new
   end
 
   def create
     @wiki = Wiki.new
+    @wiki.user = current_user
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
 
