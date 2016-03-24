@@ -1,5 +1,6 @@
 class WikisController < ApplicationController
   before_action :authenticate_user!, except: [:show]
+  
   def index
     @wikis = Wiki.all
     authorize @wikis
@@ -30,7 +31,7 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    authroize @wiki
+    authorize @wiki
   end
 
   def update

@@ -6,12 +6,31 @@ class WikiPolicy < ApplicationPolicy
     @wiki = wiki
   end
 
-  def new
+  def new?
     user.present?
   end
 
-  # def destroy?
-    # user.admin?
-    # user.created_at < 1.month.ago
-  # end
+  def create?
+    user.present?
+  end
+
+  def index?
+    user.present?
+  end
+
+  def edit?
+    user.present?
+  end
+
+  def show?
+    user.present?
+  end
+
+  def update?
+    user.present?
+  end
+
+  def destroy?
+    user.admin?
+  end
 end
