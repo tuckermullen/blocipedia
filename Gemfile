@@ -22,6 +22,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'bootstrap-sass'
 gem 'devise'
+gem "pundit"
 
 group :development, :test do
   gem 'byebug'
