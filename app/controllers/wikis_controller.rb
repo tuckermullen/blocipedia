@@ -1,8 +1,8 @@
 class WikisController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  
+
   def index
-    @wikis = Wiki.all
+    @wikis = policy_scope(Wiki)
     authorize @wikis
   end
 
@@ -36,6 +36,7 @@ class WikisController < ApplicationController
 
   def update
     @wiki = Wiki.find(params[:id])
+    authorize @wiki
 
     if @wiki.update_attributes(wiki_params)
       flash[:notice] = "Wiki was updated."

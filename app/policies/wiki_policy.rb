@@ -7,7 +7,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def new?
-    user.present?
+    create?
   end
 
   def create?
@@ -19,7 +19,7 @@ class WikiPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.present?
+    update?
   end
 
   def show?
@@ -32,5 +32,16 @@ class WikiPolicy < ApplicationPolicy
 
   def destroy?
     user.admin?
+  end
+
+  class Scope < Scope
+    def resolve
+      # if user.present?
+      #   scope.all
+      # else
+      #   scope.where(private: false)
+      # end
+      scope.all
+    end
   end
 end
