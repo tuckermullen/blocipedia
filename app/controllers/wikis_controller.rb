@@ -1,8 +1,9 @@
 class WikisController < ApplicationController
-  before_action :authenticate_user!, except: [:show]
+  before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @wikis = policy_scope(Wiki)
+    @wikis = Wiki.all.order("created_at DESC")
+    # @wikis = policy_scope(Wiki)
     authorize @wikis
   end
 
