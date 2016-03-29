@@ -1,7 +1,10 @@
 <h1>Wiki's</h1>
 
-<div>
-  <ul>
-    <li><%= @wikis %></li>
-  </ul>
+<div class="container">
+  <% @wikis.each do |wiki| %>
+    <strong>Title: </strong><%= wiki.title %><br />
+    <strong>Body: </strong><%= wiki.body %><br />
+    <strong>Created by: </strong><%= link_to wiki.user.email, wiki %><br />
+    <br />
+  <% end %>
 </div>

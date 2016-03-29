@@ -1,5 +1,10 @@
 require 'faker'
 
+if Rails.env.development?
+  User.destroy_all
+  Wiki.destroy_all
+end
+
 # Creates random users
 
 25.times do
@@ -7,7 +12,6 @@ require 'faker'
     email: Faker::Internet.email,
     password: "password"
   )
-  # user.skip_confirmation!
   user.save!
 end
 
@@ -24,7 +28,6 @@ users = User.all
 end
 
 user = User.first
-# user.skip_reconfirmation!
 user.update_attributes!(
   email: "mullentucker@gmail.com",
   password: "password"
