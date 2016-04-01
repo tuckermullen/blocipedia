@@ -10,13 +10,15 @@ class ChargesController < ApplicationController
     # Where the real magic happens
     charge = Stripe::Charge.create(
       customer: customer.id, # Note -- this is NOT the user_id in your app
-      amount: Amount.default,
+      amount: 15_00,
       description: "BigMoney Membership - #{current_user.email}",
       currency: 'usd'
     )
 
+    current_user.update_attributes!(role: 'premium')
+
     flash[:notice] = "Thanks for all the money, #{current_user.email}! Feel free to pay me again."
-    redirect_to user_path(current_user) # or wherever
+    redirect_to root_path # or wherever
 
     # Stripe will send back CardErrors, with friendly messages
     # when something goes wrong.
@@ -27,11 +29,16 @@ class ChargesController < ApplicationController
   end
 
   def new
-    @amount = 15_00
-    @stripe_btn_data = {
-      key: "#{ Rails.configuration.stripe[:publishable_key] }",
-      description: "BigMoney Membership - #{current_user.email}",
-      amount: @amount
-    }
+    if user_signed_in?
+      @amount = 15_00
+      @stripe_btn_data = {
+        key: "#{ Rails.configuration.stripe[:publishable_key] }",
+        description: "BigMoney Membership - #{current_user.email}",
+        amount: @amount
+      }
+    else
+      redirect_to root_path
+      flash[:notice] = "You must be signed in to do that."
+    end
   end
 end
