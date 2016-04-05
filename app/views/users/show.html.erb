@@ -1,0 +1,12 @@
+<div class="container">
+  <h2><%= @user.email %></h2>
+    <% @wikis.each do |wiki| %>
+    <ul>
+      <li><%= link_to wiki.title, @wiki %></li>
+    </ul>
+    <% end %>
+</div>
+<br />
+<div class="container">
+  <%= render partial: "charges/form" %>
+</div>
