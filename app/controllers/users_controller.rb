@@ -5,6 +5,18 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @wiki = Wiki.find(params[:id])
     @wikis = @user.wikis
+
+    if user_signed_in?
+      @amount = 15_00
+      @stripe_btn_data = {
+        key: "#{ Rails.configuration.stripe[:publishable_key] }",
+        description: "BigMoney Membership - #{current_user.email}",
+        amount: @amount
+      }
+    else
+      redirect_to root_path
+      flash[:notice] = "You must be signed in to do that."
+    end
   end
 
   def downgrade

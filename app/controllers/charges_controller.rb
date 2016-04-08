@@ -7,17 +7,16 @@ class ChargesController < ApplicationController
       card: params[:stripeToken]
     )
 
-    # Where the real magic happens
     charge = Stripe::Charge.create(
       customer: customer.id, # Note -- this is NOT the user_id in your app
       amount: 15_00,
-      description: "BigMoney Membership - #{current_user.email}",
+      description: "Premium Membership - #{current_user.email}",
       currency: 'usd'
     )
 
     current_user.update_attributes!(role: 'premium')
 
-    flash[:notice] = "Thanks for all the money, #{current_user.email}! Feel free to pay me again."
+    flash[:notice] = "Thank you for upgrading to a Premium Membership, #{current_user.email}!"
     redirect_to root_path # or wherever
 
     # Stripe will send back CardErrors, with friendly messages
