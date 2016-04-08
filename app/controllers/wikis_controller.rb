@@ -2,8 +2,7 @@ class WikisController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @wikis = Wiki.all.order("created_at DESC")
-    # @wikis = policy_scope(Wiki)
+    @wikis = Wiki.visible_to(current_user)
     authorize @wikis
   end
 
@@ -28,6 +27,12 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
     authorize @wiki
+
+    # Prevents users from accessing private wikis by munipulating URL
+    unless @wiki.private == nil
+      flash[:alert] = "You must be signed in to view private topics."
+      redirect_to new_session_path
+    end
   end
 
   def edit

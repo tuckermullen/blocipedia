@@ -8,5 +8,5 @@
 </div>
 <br />
 <div class="container">
-  <%= render partial: "charges/form" %>
+  <%= render partial: "charges/form", locals: {stripe_btn_data: @stripe_btn_data} %>
 </div>

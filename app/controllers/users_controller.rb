@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       @amount = 15_00
       @stripe_btn_data = {
         key: "#{ Rails.configuration.stripe[:publishable_key] }",
-        description: "BigMoney Membership - #{current_user.email}",
+        description: "Premium Membership - #{current_user.email}",
         amount: @amount
       }
     else

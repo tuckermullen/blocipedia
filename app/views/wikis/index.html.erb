@@ -2,7 +2,7 @@
 
 <div class="container">
   <% @wikis.each do |wiki| %>
-    <strong>Title: </strong><%= wiki.title %><br />
+    <strong>Title: </strong><%= link_to wiki.title, wiki %><br />
     <strong>Body: </strong><%= wiki.body %><br />
     <strong>Created by: </strong><%= link_to wiki.user.email, wiki %><br />
     <br />
