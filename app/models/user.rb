@@ -22,4 +22,11 @@ class User < ActiveRecord::Base
   def assign_role
     self.role ||= 'standard'
   end
+
+  def make_wikis_public
+    wikis.each.do |wiki|
+    if wiki.private == true
+      wiki.update_attribute!(private: false)
+    end
+  end
 end

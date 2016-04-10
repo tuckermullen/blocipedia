@@ -10,7 +10,7 @@
       <%= f.label :body %>
       <%= f.text_area :body, rows: 10, class: 'form-control', placeholder: "Enter Wiki Body" %>
     </div>
-    <% render partial: "wikis/form", locals: { f: f } %>
+    <% render partial: "wikis/form", f: f  %>
     <div class="form-group">
       <%= f.submit "Save", class: 'btn btn-success' %>
     </div>
