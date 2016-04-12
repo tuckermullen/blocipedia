@@ -3,7 +3,7 @@ class WikisController < ApplicationController
 
   def index
     @wikis = Wiki.visible_to(current_user)
-    authorize @wikis
+    # authorize @wikis
   end
 
   def new
@@ -29,10 +29,10 @@ class WikisController < ApplicationController
     authorize @wiki
 
     # Prevents users from accessing private wikis by munipulating URL
-    unless @wiki.private == nil
-      flash[:alert] = "You must be signed in to view private topics."
-      redirect_to new_session_path
-    end
+    # if @wiki.private?
+    #   flash[:alert] = "You must be signed in to view private topics."
+    #   redirect_to new_session_path(current_user)
+    # end
   end
 
   def edit
@@ -54,12 +54,13 @@ class WikisController < ApplicationController
   end
 
   def destroy
-    @wiki = Wiki.find(params[:id])
+    @user = User.find(params[:user_id])
+    @wiki = @user.wikis.find(params[:id])
     authorize @wiki
 
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
-      redirect_to root_path
+      redirect_to wikis_path
     else
       flash.now[:alert] = "Error deleting Wiki. Try again."
       render :show
@@ -69,6 +70,6 @@ class WikisController < ApplicationController
   private
 
   def wiki_params
-    params.require(:wiki).permit(:title, :body, :role)
+    params.require(:wiki).permit(:title, :body, :private)
   end
 end

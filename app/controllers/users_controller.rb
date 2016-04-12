@@ -3,7 +3,6 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    # @wiki = Wiki.find(params[:id])
     @wikis = @user.wikis
 
     if user_signed_in?
@@ -21,8 +20,7 @@ class UsersController < ApplicationController
 
   def downgrade
     if current_user.role == 'premium'
-      current_user.update_attributes!(role: 'standard')
-      current_user.make_wikis_public
+      current_user.downgrade!
       flash[:notice] = "Membership Downgraded!"
       redirect_to user_path(current_user)
     else
