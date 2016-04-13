@@ -3,7 +3,6 @@ class WikisController < ApplicationController
 
   def index
     @wikis = Wiki.visible_to(current_user)
-    # authorize @wikis
   end
 
   def new
@@ -27,12 +26,6 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
     authorize @wiki
-
-    # Prevents users from accessing private wikis by munipulating URL
-    # if @wiki.private?
-    #   flash[:alert] = "You must be signed in to view private topics."
-    #   redirect_to new_session_path(current_user)
-    # end
   end
 
   def edit
