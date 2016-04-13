@@ -1,4 +1,4 @@
-<h1>Edit Wiki</h1>
+<h2>Edit Wiki: <%= @wiki.title %></h2>
 
 <div class="col-md-8">
   <%= form_for @wiki do |f| %>
@@ -10,11 +10,7 @@
       <%= f.label :body %>
       <%= f.text_area :body, rows: 10, class: 'form-control', placeholder: "Enter Wiki Body" %>
     </div>
-    <div class="form-group">
-      <%= f.label :private, class: 'checkbox' do %>
-        <%= f.check_box :private %> Private Wiki
-      <% end %>
-    </div>
+      <%= render "wikis/form", f: f %>
     <div class="form-group">
       <%= f.submit "Save", class: 'btn btn-success' %>
     </div>

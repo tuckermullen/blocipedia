@@ -3,14 +3,13 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @wiki = Wiki.find(params[:id])
     @wikis = @user.wikis
 
     if user_signed_in?
       @amount = 15_00
       @stripe_btn_data = {
         key: "#{ Rails.configuration.stripe[:publishable_key] }",
-        description: "BigMoney Membership - #{current_user.email}",
+        description: "Premium Membership - #{current_user.email}",
         amount: @amount
       }
     else
@@ -21,7 +20,7 @@ class UsersController < ApplicationController
 
   def downgrade
     if current_user.role == 'premium'
-      current_user.update_attributes!(role: 'standard')
+      current_user.downgrade!
       flash[:notice] = "Membership Downgraded!"
       redirect_to user_path(current_user)
     else

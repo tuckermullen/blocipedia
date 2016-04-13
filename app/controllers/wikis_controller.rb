@@ -2,9 +2,8 @@ class WikisController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
 
   def index
-    @wikis = Wiki.all.order("created_at DESC")
-    # @wikis = policy_scope(Wiki)
-    authorize @wikis
+    @wikis = Wiki.visible_to(current_user)
+    # authorize @wikis
   end
 
   def new
@@ -28,6 +27,12 @@ class WikisController < ApplicationController
   def show
     @wiki = Wiki.find(params[:id])
     authorize @wiki
+
+    # Prevents users from accessing private wikis by munipulating URL
+    # if @wiki.private?
+    #   flash[:alert] = "You must be signed in to view private topics."
+    #   redirect_to new_session_path(current_user)
+    # end
   end
 
   def edit
@@ -49,12 +54,13 @@ class WikisController < ApplicationController
   end
 
   def destroy
-    @wiki = Wiki.find(params[:id])
+    @user = User.find(params[:user_id])
+    @wiki = @user.wikis.find(params[:id])
     authorize @wiki
 
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
-      redirect_to root_path
+      redirect_to wikis_path
     else
       flash.now[:alert] = "Error deleting Wiki. Try again."
       render :show
@@ -64,6 +70,6 @@ class WikisController < ApplicationController
   private
 
   def wiki_params
-    params.require(:wiki).permit(:title, :body, :role)
+    params.require(:wiki).permit(:title, :body, :private)
   end
 end
