@@ -50,7 +50,7 @@ class Scope
      elsif user.role == 'premium'
        all_wikis = scope.all
        all_wikis.each do |wiki|
-         if wiki.private? == false || wiki.owner == user || wiki.collaborators.include?(user)
+         if wiki.private? == false || wiki.user == user || wiki.collaborators.include?(user)
            wikis << wiki # if the user is premium, only show them public wikis, or that private wikis they created, or private wikis they are a collaborator on
          end
        end
