@@ -10,6 +10,18 @@
       <%= f.label :body %>
       <%= f.text_area :body, rows: 10, class: 'form-control', placeholder: "Enter Wiki Body" %>
     </div>
+    <div class="form-group">
+      <% if (current_user.role == 'admin' && @wiki.private == true) || (current_user.role == 'premium' && @wiki.private == true ) %>
+        <%= link_to "Add Yourself As Collaborator", new_wiki_collaborator_path(@user), class: 'btn btn-success' %>
+      <% end %>
+    </div>
+    <% if current_user == @wiki.collaborator %>
+      <div class="form-group">
+        <% if (current_user.role == 'admin' && @wiki.private == true) || (current_user.role == 'premium' && @wiki.private == true ) %>
+          <%= link_to "Remove Yourself As Collaborator", wiki_collaborator_path(@user), class: 'btn btn-success' %>
+        <% end %>
+      <% end %>
+    </div>
     <%= render "wikis/form", f: f %>
     <div class="form-group">
       <%= f.submit "Save", class: 'btn btn-success' %>
