@@ -1,11 +1,11 @@
 class CreateCollaborators < ActiveRecord::Migration
   def change
     create_table :collaborators do |t|
-      t.string :name
-      t.timestamps
+      t.integer :user_id
+      t.integer :wiki_id
     end
 
-    add_column :wikis, :collaborator_id, :integer
-    add_index :wikis, :collaborator_id
+    add_index :collaborators, :user_id
+    add_index :collaborators, :wiki_id
   end
 end
