@@ -11,11 +11,9 @@ class CollaboratorsController < ApplicationController
     @collaborator = Collaborator.new
     @collaborator.wiki = @wiki
     @collaborator.user = current_user
-    # todo assign user
 
     if @collaborator.save
       flash[:notice] = "You've added yourself as a collaborator."
-      redirect_to @wiki
     else
       flash[:alert] = "There was an error adding yourself as a collaborator, please try again."
     end
@@ -28,10 +26,8 @@ class CollaboratorsController < ApplicationController
 
     if @collaborator.destroy
       flash[:notice] = "You've removed yourself as a collaborator for this Wiki."
-      redirect_to @wiki
     else
       flash[:alert] = "There was an error removing yourself as a collaborator, please try again."
-      redirect_to @wiki
     end
     redirect_to @wiki
   end
