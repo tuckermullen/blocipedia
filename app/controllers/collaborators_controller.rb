@@ -8,8 +8,10 @@ class CollaboratorsController < ApplicationController
 
   def create
     @wiki = Wiki.find(params[:wiki_id])
-    @collaborator = Collaborator.new(collaborator_params)
+    @collaborator = Collaborator.new
     @collaborator.wiki = @wiki
+    @collaborator.user = current_user
+    # todo assign user
 
     if @collaborator.save
       flash[:notice] = "You've added yourself as a collaborator."
@@ -22,7 +24,7 @@ class CollaboratorsController < ApplicationController
 
   def destroy
     @wiki = Wiki.find(params[:wiki_id])
-    @collaborator = Collaborator.find(params[:id])
+    @collaborator = Collaborator.find_by(user_id: current_user.id, wiki_id: @wiki.id)
 
     if @collaborator.destroy
       flash[:notice] = "You've removed yourself as a collaborator for this Wiki."
@@ -32,11 +34,5 @@ class CollaboratorsController < ApplicationController
       redirect_to @wiki
     end
     redirect_to @wiki
-  end
-
-  private
-
-  def collaborator_params
-    params.require(:collaborator).permit(:user_id, :wiki_id)
   end
 end
