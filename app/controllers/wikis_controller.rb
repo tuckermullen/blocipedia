@@ -30,9 +30,7 @@ class WikisController < ApplicationController
 
   def edit
     @wiki = Wiki.find(params[:id])
-    if @wiki.users.include? current_user
-      @collaborator = @wiki.collaborators.find_by(:user_id => current_user.id)
-    end
+    @collaborator = @wiki.collaborators.find_by(:user_id => current_user.id)
     authorize @wiki
   end
 

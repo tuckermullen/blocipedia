@@ -1,12 +1,32 @@
-<div class="container">
-  <h2><%= @user.email %></h2>
-    <% @wikis.each do |wiki| %>
-    <ul>
-      <li><%= link_to wiki.title, wiki %></li>
-    </ul>
-    <% end %>
-</div>
+<h3><strong>User: </strong><%= @user.email %></h3>
+<br />
 <br />
 <div class="container">
-  <%= render partial: "charges/form", locals: {stripe_btn_data: @stripe_btn_data} %>
+  <div class="row">
+    <div class="col-sm-4">
+      <% @wikis.each do |wiki| %>
+        <div class="row">
+          <ul>
+            <li><%= link_to wiki.title, wiki %></li>
+          </ul>
+        </div>
+      <% end %>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-md-4">
+        <% @wiki.collaborators.each do |wiki| %>
+        <div class="row">
+          <ul>
+            <li><%= link_to wiki.title %></li>
+          </ul>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="col-md-4">
+        <%= render partial: "charges/form", locals: {stripe_btn_data: @stripe_btn_data} %>
+      </div>
+    </div>
+  </div>
 </div>

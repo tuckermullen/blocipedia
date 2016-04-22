@@ -4,6 +4,9 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @wikis = @user.wikis
+    @wiki = Wiki.find(params[:id])
+    # @collaborators = Collaborator.all
+    @collaborator = @wiki.collaborators.find_by(:user_id => current_user.id)
 
     if user_signed_in?
       @amount = 15_00
