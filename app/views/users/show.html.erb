@@ -14,10 +14,10 @@
     </div>
     <div class="col-sm-4">
       <div class="col-md-4">
-        <% @wiki.collaborators.each do |wiki| %>
+        <% @collaborating_wikis.each do |collaborating_wiki| %>
         <div class="row">
           <ul>
-            <li><%= link_to wiki.title %></li>
+            <li><%= link_to "Wiki", wiki_path(collaborating_wiki) %></li>
           </ul>
         </div>
         <% end %>
