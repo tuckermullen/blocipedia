@@ -1,5 +1,9 @@
 class User < ActiveRecord::Base
-  has_many :wikis, dependent: :destroy
+  has_many :wikis
+  has_many :collaborators
+  has_many :collaborating_wikis, through: :collaborators, source: :wiki
+  validates :wiki_id, presence: true
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
