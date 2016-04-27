@@ -4,6 +4,7 @@
 <div class="container">
   <div class="row">
     <div class="col-sm-4">
+      <h4>My Wikis:</h4>
       <% @wikis.each do |wiki| %>
         <div class="row">
           <ul>
@@ -14,10 +15,11 @@
     </div>
     <div class="col-sm-4">
       <div class="col-md-4">
+        <h4>Collaborating Wikis:</h4>
         <% @collaborating_wikis.each do |collaborating_wiki| %>
         <div class="row">
           <ul>
-            <li><%= link_to "Wiki", wiki_path(collaborating_wiki) %></li>
+            <li><%= link_to @wiki.title, wiki_path(collaborating_wiki) %></li>
           </ul>
         </div>
         <% end %>

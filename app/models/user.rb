@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_many :wikis
   has_many :collaborators
-  has_many :collaborating_wikis, through: :collaborators, foreign_key: "wiki_id", class_name: "Wiki"
+  has_many :collaborating_wikis, through: :collaborators, source: :wiki
   validates :wiki_id, presence: true
 
   # Include default devise modules. Others available are:

@@ -5,8 +5,6 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @wikis = @user.wikis
     @wiki = Wiki.find(params[:id])
-    # @collaborators = Collaborator.all
-    # @collaborator = @wiki.collaborators.find_by(:user_id => current_user.id)
     @collaborating_wikis = current_user.collaborating_wikis
 
     if user_signed_in?
